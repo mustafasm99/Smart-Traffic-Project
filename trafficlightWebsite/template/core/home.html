@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'core/css/main.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <main class="flex sb container">
+        <!-- the main container -->
+        <div class="flex-col cetner table-holder">
+            <div class="traffic-table">
+                <table border="1" >
+                    <thead>
+                        <tr>
+                            <td>الشارع          </td>
+                            <td>عدد السياراة   </td>
+                            <td>الاشارة         </td>
+                            <td>فتح الاشارة     </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>S1</td>
+                            <td id="cars-number">N/A</td>
+                            <td id="traffic-light">N/A</td>
+                            <td><button onclick="send_request(0)">request</button></td>
+                        </tr>
+                        <tr>
+                            <td>S2</td>
+                            <td id="cars-number">N/A</td>
+                            <td id="traffic-light">N/A</td>
+                            <td><button onclick="send_request(1)">request</button></td>
+                        </tr>
+                        <tr>
+                            <td>S3</td>
+                            <td id="cars-number">N/A</td>
+                            <td id="traffic-light">N/A</td>
+                            <td><button onclick="send_request(2)">request</button></td>
+                        </tr>
+                        <tr>
+                            <td>S4</td>
+                            <td id="cars-number">N/A</td>
+                            <td id="traffic-light">N/A</td>
+                            <td><button onclick="send_request(3)">request</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="log-out flex center">
+                <a href="{% url 'core:core_logout' %}">Log Out</a>
+                <div class="flex-col">
+                    <input class="ipinput" type="text" name="ip" id="ipinput" oninput="setIP(this)" placeholder="set hardware ip">
+                    <input class="ipinput" type="text" name="ip" id="apikeyinput" placeholder="Enter your API Key" oninput="setAPI(this)">
+                </div>
+                <button class="start-looping" onclick="start()">
+                    Get Data
+                </button>
+            </div>
+        </div>
+
+
+        <div class="driver-profile">
+            {% if user.image %}
+            <img src="{{user.image.url}}" alt="these user have not image" class="profile-image">
+            {% endif %}
+
+            <div class="profile-info-holder">
+                <h2 class="name">{{user.first_name}} {{user.last_name}}</h2>
+                <div class="flex sb ">
+                    {% if user.car_type == "Ambulance"%}
+                        <img src="{%static 'core/images/amp.png'%}" alt="">
+                    {% elif user.car_type == "FireTrack"%}
+                        <img src="{%static 'core/images/fire.png'%}" alt="">
+                    {% else %}
+                        <img src="{%static 'core/images/police.png'%}" alt="">
+                    {% endif %}
+
+                        <div class="plate_number">
+                            {{user.plate_number}}
+                        </div>
+
+                        <div class="user-location flex sb">
+                            <img src="{% static 'core/images/map.png' %}" alt="">
+                            {{user.city_name}}
+                        </div>
+                </div>
+
+                
+            </div>
+            <div class="old-requests">
+                    {% for request in user.get_all_requests %}
+                        <div class="flex">
+                            <p>{{request.street}}</p>
+                            <p>{{request.date}}</p>
+                            <p>{{request.time}}</p>
+                        </div>
+                    {% endfor %}
+            </div>
+        </div>
+        <!-- the end of the main -->
+    </main>
+    <script src="{%static 'core/js/main.js'%}"></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>html</title>
+    <link rel="stylesheet" href="{% static 'core/css/main.css' %}">
+</head>
+<body >
+    <!-- start the form  -->
+    <form action="" method="post" class="login-form flex-col login-container">
+        {% csrf_token %}
+        <h1>LOG IN</h1>
+        <input type="text" name="username" id="" required>
+        <input type="text" name="password" id="" required>
+        <button>
+            login
+        </button>
+    </form>
+    <!-- end the form -->
+</body>
+</html>
